@@ -57,8 +57,7 @@ func onCmd() *cobra.Command {
 				}
 			}
 
-			socksAddr := fmt.Sprintf("socks5h://%s@%s", cfg.AuthToken, net.JoinHostPort(host, port))
-			httpAddr := fmt.Sprintf("http://%s@%s", cfg.AuthToken, net.JoinHostPort(host, port))
+			socksAddr := fmt.Sprintf("socks5h://user:%s@%s", cfg.AuthToken, net.JoinHostPort(host, port))
 
 			envContent := fmt.Sprintf(`export http_proxy="%s"
 export https_proxy="%s"
@@ -68,7 +67,7 @@ export HTTPS_PROXY="%s"
 export ALL_PROXY="%s"
 export no_proxy="localhost,127.0.0.1,::1"
 export NO_PROXY="localhost,127.0.0.1,::1"
-`, httpAddr, httpAddr, socksAddr, httpAddr, httpAddr, socksAddr)
+`, socksAddr, socksAddr, socksAddr, socksAddr, socksAddr, socksAddr)
 
 			envFile := envFilePath()
 			if err := os.MkdirAll(filepath.Dir(envFile), 0700); err != nil {
